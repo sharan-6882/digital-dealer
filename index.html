@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuts & Biryani Spices App</title>
+    <style>
+        :root { --primary: #d35400; --dark: #2c3e50; --light: #f4f7f6; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--light); display: flex; flex-direction: column; align-items: center; }
+        header { width: 100%; background: var(--primary); color: white; padding: 20px 0; text-align: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .container { width: 100%; max-width: 480px; padding: 15px; box-sizing: border-box; }
+        h2 { border-left: 5px solid var(--primary); padding-left: 10px; color: var(--dark); font-size: 1.2rem; margin: 25px 0 15px; }
+        .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: 0.2s; border: 1px solid #eee; }
+        .card:active { transform: scale(0.97); }
+        .card img { width: 100%; height: 130px; object-fit: cover; }
+        .card-info { padding: 10px; text-align: center; }
+        .name { font-size: 0.95rem; font-weight: bold; color: #333; display: block; }
+        .tamil { font-size: 0.8rem; color: #888; margin-bottom: 5px; display: block; }
+        .price { color: #27ae60; font-weight: 700; font-size: 1rem; margin: 5px 0 0; }
+        .contact-btn { width: 100%; padding: 18px; background: var(--dark); color: white; border: none; border-radius: 10px; margin-top: 30px; font-weight: bold; font-size: 1.1rem; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        /* Modal */
+        #modal, #overlay { display: none; position: fixed; z-index: 1000; }
+        #overlay { top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); }
+        #modal { top:50%; left:50%; transform:translate(-50%, -50%); background:white; padding:30px; border-radius:15px; width:85%; max-width:350px; text-align:center; }
+        .close-btn { background: #eee; border: none; padding: 10px 20px; border-radius: 5px; margin-top: 20px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<header>Nuts & Spices Mart</header>
+
+<div class="container">
+    
+    <h2>Nuts (Price per 500g)</h2>
+    <div class="product-grid">
+        <div class="card"><img src="https://images.unsplash.com/photo-1508061253366-f7da158b6d46?w=300" alt="Almond"><div class="card-info"><span class="name">Almond</span><span class="tamil">பாதாம்</span><p class="price">₹450</p></div></div>
+        <div class="card"><img src="https://images.unsplash.com/photo-1509912743196-b45167a9c2e3?w=300" alt="Cashew"><div class="card-info"><span class="name">Cashew</span><span class="tamil">முந்திரி</span><p class="price">₹410</p></div></div>
+        <div class="card"><img src="https://images.unsplash.com/photo-1551615593-ef5fe267e80c?w=300" alt="Pistachio"><div class="card-info"><span class="name">Pistachio</span><span class="tamil">பிஸ்தா</span><p class="price">₹580</p></div></div>
+        <div class="card"><img src="https://images.unsplash.com/photo-1521305916504-4a1121188589?w=300" alt="Walnut"><div class="card-info"><span class="name">Walnut</span><span class="tamil">அக்ரூட்</span><p class="price">₹620</p></div></div>
+    </div>
+
+    <h2>Biryani Spices (Price per 100g)</h2>
+    <div class="product-grid">
+        <div class="card"><img src="_4" alt="Cardamom"><div class="card-info"><span class="name">Cardamom</span><span class="tamil">ஏலக்காய்</span><p class="price">₹290</p></div></div>
+        <div class="card"><img src="_5" alt="Cloves"><div class="card-info"><span class="name">Cloves</span><span class="tamil">கிராம்பு</span><p class="price">₹110</p></div></div>
+        <div class="card"><img src="_2" alt="Cinnamon"><div class="card-info"><span class="name">Cinnamon</span><span class="tamil">பட்டை</span><p class="price">₹80</p></div></div>
+        <div class="card"><img src="_7" alt="Star Anise"><div class="card-info"><span class="name">Star Anise</span><span class="tamil">அன்னாசிப் பூ</span><p class="price">₹95</p></div></div>
+        <div class="card"><img src="_8" alt="Bay Leaf"><div class="card-info"><span class="name">Bay Leaf</span><span class="tamil">பிரிஞ்சி இலை</span><p class="price">₹40</p></div></div>
+        <div class="card"><img src="_9" alt="Mace"><div class="card-info"><span class="name">Mace</span><span class="tamil">ஜாதிப்பத்திரி</span><p class="price">₹210</p></div></div>
+        <div class="card"><img src="_11" alt="Cumin Seeds"><div class="card-info"><span class="name">Cumin Seeds</span><span class="tamil">சீரகம்</span><p class="price">₹75</p></div></div>
+        <div class="card"><img src="_12" alt="Black Pepper"><div class="card-info"><span class="name">Black Pepper</span><span class="tamil">மிளகு</span><p class="price">₹85</p></div></div>
+        <div class="card"><img src="_13" alt="Poppy Seeds"><div class="card-info"><span class="name">Poppy Seeds</span><span class="tamil">கசகசா</span><p class="price">₹180</p></div></div>
+        <div class="card"><img src="_14" alt="Nutmeg"><div class="card-info"><span class="name">Nutmeg</span><span class="tamil">ஜாதிக்காய்</span><p class="price">₹45/pc</p></div></div>
+    </div>
+
+    <button class="contact-btn" onclick="toggleModal(true)">Contact Us to Order</button>
+</div>
+
+<div id="overlay" onclick="toggleModal(false)"></div>
+<div id="modal">
+    <h3>Order Now</h3>
+    <p>📞 +91 00000 00000</p>
+    <p>📧 sales@spicemart.com</p>
+    <p>📍 Main Street, Your City</p>
+    <button class="close-btn" onclick="toggleModal(false)">Close</button>
+</div>
+
+<script>
+    function toggleModal(show) {
+        document.getElementById('modal').style.display = show ? 'block' : 'none';
+        document.getElementById('overlay').style.display = show ? 'block' : 'none';
+        document.body.style.overflow = show ? 'hidden' : 'auto';
+    }
+</script>
+
+</body>
+</html>
