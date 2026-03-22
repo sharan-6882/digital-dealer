@@ -3,209 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spice & Nut Mart | Your Local Store</title>
+    <title>Nuts and spices</title>
     <style>
         :root {
-            --spice-orange: #e67e22;
-            --deep-red: #c0392b;
-            --nut-brown: #a67c52;
-            --dark: #2c3e50;
-            --bg: #fdfaf6;
+            --primary: #e67e22;
+            --secondary: #2c3e50;
+            --accent: #27ae60;
+            --light-bg: #fdfaf6;
         }
 
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: var(--bg); color: #333; }
+        body { font-family: 'Inter', sans-serif; margin: 0; background-color: var(--light-bg); color: #333; }
         
         header { 
-            background: linear-gradient(135deg, var(--spice-orange), var(--deep-red));
-            color: white; padding: 25px 15px; text-align: center; font-weight: bold;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000;
+            background: linear-gradient(135deg, var(--primary), #d35400);
+            color: white; padding: 20px; text-align: center;
+            position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        .container { max-width: 500px; margin: auto; padding: 15px; }
+        .search-container { padding: 15px; background: white; border-bottom: 1px solid #eee; }
+        #searchInput {
+            width: 100%; padding: 12px; border: 2px solid #eee; border-radius: 10px;
+            font-size: 1rem; box-sizing: border-box; outline: none; transition: 0.3s;
+        }
+        #searchInput:focus { border-color: var(--primary); }
 
-        .section-title { 
-            font-size: 1.3rem; margin: 25px 0 15px; padding-bottom: 5px;
-            border-bottom: 3px solid var(--spice-orange); color: var(--dark);
-            display: flex; justify-content: space-between; align-items: center;
+        .container { max-width: 500px; margin: auto; padding: 15px; padding-bottom: 100px; }
+
+        .section-header { 
+            font-size: 1.2rem; font-weight: bold; color: var(--secondary);
+            margin: 25px 0 15px; border-left: 5px solid var(--primary); padding-left: 10px;
         }
 
-        /* Product Grid */
-        .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
 
-        .card { 
+        .product-card { 
             background: white; border-radius: 15px; overflow: hidden;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.06); transition: 0.3s;
-            display: flex; flex-direction: column; border: 1px solid #f0eee9;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #f0eee9;
+            transition: transform 0.2s; display: flex; flex-direction: column;
         }
+        .product-card:active { transform: scale(0.96); }
 
-        .card:hover { transform: translateY(-3px); }
+        .product-card img { width: 100%; height: 140px; object-fit: cover; background: #f9f9f9; }
 
-        .card img { width: 100%; height: 130px; object-fit: cover; background: #f9f9f9; }
+        .card-details { padding: 12px; text-align: center; }
+        .item-title { font-size: 0.95rem; font-weight: 700; color: #222; margin: 0; }
+        .item-tamil { font-size: 0.8rem; color: #888; margin: 4px 0; }
+        .item-price { font-size: 1.1rem; color: var(--accent); font-weight: 800; margin-top: 8px; }
 
-        .card-body { padding: 12px; text-align: center; flex-grow: 1; }
-
-        .name { font-size: 0.95rem; font-weight: bold; color: #333; display: block; }
-        .tamil { font-size: 0.8rem; color: #888; margin: 4px 0; display: block; }
-        .price { color: #27ae60; font-weight: 800; font-size: 1.05rem; margin-top: 8px; }
-
-        /* Floating Contact Button */
-        .contact-bar {
+        /* Floating Order Button */
+        .order-panel {
             position: fixed; bottom: 0; width: 100%; max-width: 500px;
             background: white; padding: 15px; box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
-            display: flex; justify-content: center; box-sizing: border-box;
+            display: flex; justify-content: center; box-sizing: border-box; z-index: 999;
         }
-
         .btn-order {
-            background: var(--dark); color: white; border: none; padding: 12px 40px;
-            border-radius: 30px; font-weight: bold; font-size: 1.1rem; cursor: pointer;
-            width: 90%; transition: background 0.3s;
+            background: var(--secondary); color: white; border: none; padding: 15px;
+            border-radius: 12px; font-weight: bold; font-size: 1.1rem; width: 100%;
+            cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
-        .btn-order:active { background: var(--spice-orange); }
 
-        /* Modal */
-        #modal, #overlay { display: none; position: fixed; z-index: 2000; }
-        #overlay { top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); backdrop-filter: blur(4px); }
-        #modal { 
-            top:50%; left:50%; transform:translate(-50%, -50%); background:white; 
-            padding:30px; border-radius:20px; width:80%; max-width:350px; text-align:center;
+        /* Modal styling */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; }
+        .modal-content { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            background: white; padding: 30px; border-radius: 20px; width: 80%; max-width: 350px; text-align: center;
         }
-        .close-btn { background: #eee; border: none; padding: 10px 20px; border-radius: 10px; margin-top: 20px; }
     </style>
 </head>
 <body>
 
 <header>
     SHREE SPICE & NUT MART
-    <div style="font-size: 0.8rem; font-weight: normal; margin-top: 5px;">Pure • Aromatic • Premium</div>
 </header>
 
-<div class="container" style="padding-bottom: 100px;">
-    
-    <div class="section-title">Nuts (Dry Fruits) <span style="font-size: 0.7rem;">Price/500g</span></div>
+<div class="search-container">
+    <input type="text" id="searchInput" placeholder="Search nuts or spices..." onkeyup="filterItems()">
+</div>
+
+<div class="container" id="productContainer">
+    <div class="section-header">Premium Nuts (500g)</div>
     <div class="product-grid">
-        <div class="card">
-            <img src="https://images.unsplash.com/photo-1508061253366-f7da158b6d46?w=400" alt="Almonds">
-            <div class="card-body">
-                <span class="name">Almonds (Badam)</span>
-                <span class="tamil">பாதாம்</span>
-                <p class="price">₹460</p>
+        <div class="product-card" data-name="almond badam">
+            <img src="https://images.pexels.com/photos/1295572/pexels-photo-1295572.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Almonds">
+            <div class="card-details">
+                <p class="item-title">Almonds (Badam)</p>
+                <p class="item-tamil">பாதாம்</p>
+                <p class="item-price">₹460</p>
             </div>
         </div>
-        <div class="card">
-            <img src="https://images.unsplash.com/photo-1509912743196-b45167a9c2e3?w=400" alt="Cashews">
-            <div class="card-body">
-                <span class="name">Cashews (Kaju)</span>
-                <span class="tamil">முந்திரி</span>
-                <p class="price">₹425</p>
+        <div class="product-card" data-name="cashew kaju">
+            <img src="https://images.pexels.com/photos/1292600/pexels-photo-1292600.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Cashews">
+            <div class="card-details">
+                <p class="item-title">Cashews (Kaju)</p>
+                <p class="item-tamil">முந்திரி</p>
+                <p class="item-price">₹420</p>
             </div>
         </div>
-        <div class="card">
-            <img src="https://images.unsplash.com/photo-1551615593-ef5fe267e80c?w=400" alt="Pistachios">
-            <div class="card-body">
-                <span class="name">Pistachios (Pista)</span>
-                <span class="tamil">பிஸ்தா</span>
-                <p class="price">₹540</p>
+        <div class="product-card" data-name="pista pistachio">
+            <img src="https://images.pexels.com/photos/5945899/pexels-photo-5945899.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Pistachios">
+            <div class="card-details">
+                <p class="item-title">Pistachios (Pista)</p>
+                <p class="item-tamil">பிஸ்தா</p>
+                <p class="item-price">₹540</p>
             </div>
         </div>
-        <div class="card">
-            <img src="https://images.unsplash.com/photo-1521305916504-4a1121188589?w=400" alt="Walnuts">
-            <div class="card-body">
-                <span class="name">Walnuts (Akhrot)</span>
-                <span class="tamil">அக்ரூட்</span>
-                <p class="price">₹680</p>
+        <div class="product-card" data-name="walnut akhrot">
+            <img src="https://images.pexels.com/photos/4197439/pexels-photo-4197439.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Walnuts">
+            <div class="card-details">
+                <p class="item-title">Walnuts (Akhrot)</p>
+                <p class="item-tamil">அக்ரூட்</p>
+                <p class="item-price">₹650</p>
             </div>
         </div>
     </div>
 
-    <div class="section-title">Spice Powders (Thool) <span style="font-size: 0.7rem;">Price/100g</span></div>
+    <div class="section-header">Whole Biryani Spices (100g)</div>
     <div class="product-grid">
-        <div class="card">
-            <img src="https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=400" alt="Turmeric">
-            <div class="card-body">
-                <span class="name">Turmeric Powder</span>
-                <span class="tamil">மஞ்சள் தூள்</span>
-                <p class="price">₹45</p>
+        <div class="product-card" data-name="cardamom elakkai">
+            <img src="https://images.pexels.com/photos/5945758/pexels-photo-5945758.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Cardamom">
+            <div class="card-details">
+                <p class="item-title">Cardamom</p>
+                <p class="item-tamil">ஏலக்காய்</p>
+                <p class="item-price">₹290</p>
             </div>
         </div>
-        <div class="card">
-            <img src="https://images.unsplash.com/photo-1599940824399-b87987cb9724?w=400" alt="Red Chili">
-            <div class="card-body">
-                <span class="name">Red Chili Powder</span>
-                <span class="tamil">சிவப்பு மிளகாய் தூள்</span>
-                <p class="price">₹65</p>
+        <div class="product-card" data-name="cinnamon pattai">
+            <img src="https://images.pexels.com/photos/133748/pexels-photo-133748.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Cinnamon">
+            <div class="card-details">
+                <p class="item-title">Cinnamon</p>
+                <p class="item-tamil">பட்டை</p>
+                <p class="item-price">₹85</p>
             </div>
         </div>
-        <div class="card">
-            <img src="https://images.unsplash.com/photo-1626131707035-77983654f59c?w=400" alt="Kashmiri Chili">
-            <div class="card-body">
-                <span class="name">Kashmiri Chili Powder</span>
-                <span class="tamil">காஷ்மீரி மிளகாய் தூள்</span>
-                <p class="price">₹85</p>
+        <div class="product-card" data-name="cloves kirambu">
+            <img src="https://images.pexels.com/photos/1594248/pexels-photo-1594248.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Cloves">
+            <div class="card-details">
+                <p class="item-title">Cloves</p>
+                <p class="item-tamil">கிராம்பு</p>
+                <p class="item-price">₹110</p>
             </div>
         </div>
-        <div class="card">
-            <div style="height:130px; background:#8b4513; color:white; display:flex; align-items:center; justify-content:center; font-weight:bold;">MASALA</div>
-            <div class="card-body">
-                <span class="name">Garam Masala</span>
-                <span class="tamil">கரம் மசாலா தூள்</span>
-                <p class="price">₹90</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="section-title">Whole Spices <span style="font-size: 0.7rem;">Price/100g</span></div>
-    <div class="product-grid">
-        <div class="card">
-            <img src="https://images.unsplash.com/photo-1599143338401-008f052ee730?w=400" alt="Cardamom">
-            <div class="card-body">
-                <span class="name">Cardamom</span>
-                <span class="tamil">ஏலக்காய்</span>
-                <p class="price">₹280</p>
-            </div>
-        </div>
-        <div class="card">
-            <img src="https://images.unsplash.com/photo-1615485290234-927361a998cb?w=400" alt="Cloves">
-            <div class="card-body">
-                <span class="name">Cloves</span>
-                <span class="tamil">கிராம்பு</span>
-                <p class="price">₹115</p>
-            </div>
-        </div>
-        <div class="card">
-            <img src="https://images.unsplash.com/photo-1532550907401-a500c9a57435?w=400" alt="Cinnamon">
-            <div class="card-body">
-                <span class="name">Cinnamon</span>
-                <span class="tamil">இலவங்கப்பட்டை</span>
-                <p class="price">₹85</p>
-            </div>
-        </div>
-        <div class="card">
-            <div style="height:130px; background:#f4d03f; color:var(--dark); display:flex; align-items:center; justify-content:center; font-weight:bold;">ASAFOETIDA</div>
-            <div class="card-body">
-                <span class="name">Asafoetida (Hing)</span>
-                <span class="tamil">பெருங்காயம்</span>
-                <p class="price">₹105</p>
+        <div class="product-card" data-name="star anise">
+            <img src="https://images.pexels.com/photos/5945890/pexels-photo-5945890.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Star Anise">
+            <div class="card-details">
+                <p class="item-title">Star Anise</p>
+                <p class="item-tamil">அன்னாசிப் பூ</p>
+                <p class="item-price">₹90</p>
             </div>
         </div>
     </div>
 </div>
 
-<div class="contact-bar">
-    <button class="btn-order" onclick="toggleModal(true)">PLACE ORDER NOW</button>
+<div class="order-panel">
+    <button class="btn-order" onclick="toggleModal(true)">INQUIRY / ORDER</button>
 </div>
 
-<div id="overlay" onclick="toggleModal(false)"></div>
-<div id="modal">
-    <h2 style="color:var(--spice-orange)">Order via WhatsApp</h2>
-    <p>Message us your list to order!</p>
-    <p style="font-size: 1.2rem; font-weight: bold;">+91 98765 43210</p>
-    <button class="close-btn" onclick="toggleModal(false)">Close</button>
+<div id="modalOverlay" class="modal-overlay" onclick="toggleModal(false)"></div>
+<div id="contactModal" class="modal-content" style="display:none;">
+    <h2 style="color:var(--primary)">Get in Touch</h2>
+    <p>WhatsApp: <strong>+91 98765 43210</strong></p>
+    <p>Email: <strong>orders@spicemart.com</strong></p>
+    <button onclick="toggleModal(false)" style="margin-top:20px; padding:10px 20px; border-radius:8px; border:none; background:#eee;">Close</button>
 </div>
 
 <script>
+    // Search Function
+    function filterItems() {
+        let input = document.getElementById('searchInput').value.toLowerCase();
+        let cards = document.getElementsByClassName('product-card');
+        
+        for (let i = 0; i < cards.length; i++) {
+            let name = cards[i].getAttribute('data-name');
+            if (name.includes(input)) {
+                cards[i].style.display = "";
+            } else {
+                cards[i].style.display = "none";
+            }
+        }
+    }
+
+    // Modal Toggle
     function toggleModal(show) {
-        document.getElementById('modal').style.display = show ? 'block' : 'none';
-        document.getElementById('overlay').style.display = show ? 'block' : 'none';
+        document.getElementById('modalOverlay').style.display = show ? 'block' : 'none';
+        document.getElementById('contactModal').style.display = show ? 'block' : 'none';
+        document.body.style.overflow = show ? 'hidden' : 'auto';
     }
 </script>
 
