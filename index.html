@@ -3,192 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>example </title>
-    <style>
-        :root {
-            --primary: #e67e22;
-            --secondary: #2c3e50;
-            --accent: #27ae60;
-            --light-bg: #fdfaf6;
-        }
-
-        body { font-family: 'Inter', sans-serif; margin: 0; background-color: var(--light-bg); color: #333; }
-        
-        header { 
-            background: linear-gradient(135deg, var(--primary), #d35400);
-            color: white; padding: 20px; text-align: center;
-            position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-
-        .search-container { padding: 15px; background: white; border-bottom: 1px solid #eee; }
-        #searchInput {
-            width: 100%; padding: 12px; border: 2px solid #eee; border-radius: 10px;
-            font-size: 1rem; box-sizing: border-box; outline: none; transition: 0.3s;
-        }
-        #searchInput:focus { border-color: var(--primary); }
-
-        .container { max-width: 500px; margin: auto; padding: 15px; padding-bottom: 100px; }
-
-        .section-header { 
-            font-size: 1.2rem; font-weight: bold; color: var(--secondary);
-            margin: 25px 0 15px; border-left: 5px solid var(--primary); padding-left: 10px;
-        }
-
-        .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-
-        .product-card { 
-            background: white; border-radius: 15px; overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #f0eee9;
-            transition: transform 0.2s; display: flex; flex-direction: column;
-        }
-        .product-card:active { transform: scale(0.96); }
-
-        .product-card img { width: 100%; height: 140px; object-fit: cover; background: #f9f9f9; }
-
-        .card-details { padding: 12px; text-align: center; }
-        .item-title { font-size: 0.95rem; font-weight: 700; color: #222; margin: 0; }
-        .item-tamil { font-size: 0.8rem; color: #888; margin: 4px 0; }
-        .item-price { font-size: 1.1rem; color: var(--accent); font-weight: 800; margin-top: 8px; }
-
-        /* Floating Order Button */
-        .order-panel {
-            position: fixed; bottom: 0; width: 100%; max-width: 500px;
-            background: white; padding: 15px; box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
-            display: flex; justify-content: center; box-sizing: border-box; z-index: 999;
-        }
-        .btn-order {
-            background: var(--secondary); color: white; border: none; padding: 15px;
-            border-radius: 12px; font-weight: bold; font-size: 1.1rem; width: 100%;
-            cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-
-        /* Modal styling */
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; }
-        .modal-content { 
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            background: white; padding: 30px; border-radius: 20px; width: 80%; max-width: 350px; text-align: center;
-        }
-    </style>
+    <title>Digital Dealer</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
 </head>
 <body>
-
-<header>
-    example store
-</header>
-
-<div class="search-container">
-    <input type="text" id="searchInput" placeholder="Search nuts or spices..." onkeyup="filterItems()">
-</div>
-
-<div class="container" id="productContainer">
-    <div class="section-header">Premium Nuts (500g)</div>
-    <div class="product-grid">
-        <div class="product-card" data-name=" badam">
-            <img src="https://i0.wp.com/vrmshoppe.com/wp-content/uploads/2021/05/full-frame-shot-of-raw-almonds-royalty-free-image-683814187-1537885519.jpg?fit=480%2C480&ssl=1" alt="Almonds">
-            <div class="card-details">
-                <p class="item-title">Almonds (Badam)</p>
-                <p class="item-tamil">பாதாம்</p>
-                <p class="item-price">₹460</p>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="home">
+            <h1>Welcome to Digital Dealer</h1>
+            <p>Your go-to solution for digital marketing.</p>
+            <button aria-label="Learn more about our services" class="hover-effect">Learn More</button>
+        </section>
+        <section id="services">
+            <h2>Our Services</h2>
+            <ul>
+                <li>
+                    <h3>Service 1</h3>
+                    <p>Description of service 1.</p>
+                </li>
+                <li>
+                    <h3>Service 2</h3>
+                    <p>Description of service 2.</p>
+                </li>
+            </ul>
+            <button id="modalButton" aria-label="Open modal for more information">More Info</button>
+            <div id="myModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Additional Information</h2>
+                    <p>Here is more information about our services.</p>
+                </div>
             </div>
-        </div>
-        <div class="product-card" data-name="cashew ">
-            <img src="https://gonefarmers.com/cdn/shop/products/image_97225a30-47e6-4d93-bded-7fa5bc4d5d4c_1024x1024@2x.jpg?v=1608040183">
-            <div class="card-details">
-                <p class="item-title">Cashews (Kaju)</p>
-                <p class="item-tamil">முந்திரி</p>
-                <p class="item-price">₹420</p>
-            </div>
-        </div>
-        <div class="product-card" data-name="pista ">
-            <img src="https://cdn.shopaccino.com/adfs/products/pista-seeds-unsalted-143080_l.jpg?v=704?param=1" alt="Pistachios">
-            <div class="card-details">
-                <p class="item-title">Pistachios (Pista)</p>
-                <p class="item-tamil">பிஸ்தா</p>
-                <p class="item-price">₹540</p>
-            </div>
-        </div>
-        <div class="product-card" data-name="walnut ">
-            <img src="https://m.media-amazon.com/images/I/71nqnA7vIML._SL1500_.jpg" alt="Walnuts">
-            <div class="card-details">
-                <p class="item-title">Walnuts (Akhrot)</p>
-                <p class="item-tamil">அக்ரூட்</p>
-                <p class="item-price">₹650</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="section-header"> Spices (100g)</div>
-    <div class="product-grid">
-        <div class="product-card" data-name="cardamom ">
-            <img src="https://www.paperandtea.com/cdn/shop/articles/Kardamom_5f282560-b3c3-4126-b21b-c4763101e05d.jpg?v=1768480872&width=1000" alt="Cardamom">
-            <div class="card-details">
-                <p class="item-title">Cardamom</p>
-                <p class="item-tamil">ஏலக்காய்</p>
-                <p class="item-price">₹290</p>
-            </div>
-        </div>
-        <div class="product-card" data-name="cinnamon ">
-            <img src="https://cdn.britannica.com/80/142080-050-7773CE98/Cinnamon-quills.jpg" alt="Cinnamon">
-            <div class="card-details">
-                <p class="item-title">Cinnamon</p>
-                <p class="item-tamil">பட்டை</p>
-                <p class="item-price">₹85</p>
-            </div>
-        </div>
-        <div class="product-card" data-name="cloves ">
-            <img src="https://i0.wp.com/post.healthline.com/wp-content/uploads/2020/01/cloves-on-wooden-spoon-1296x728.jpg?h=1528" alt="Cloves">
-            <div class="card-details">
-                <p class="item-title">Cloves</p>
-                <p class="item-tamil">கிராம்பு</p>
-                <p class="item-price">₹110</p>
-            </div>
-        </div>
-        <div class="product-card" data-name="star anise">
-            <img src="https://m.media-amazon.com/images/I/51kIbXtHnsL._SY300_SX300_QL70_FMwebp_.jpg" alt="Star Anise">
-            <div class="card-details">
-                <p class="item-title">Star Anise</p>
-                <p class="item-tamil">அன்னாசிப் பூ</p>
-                <p class="item-price">₹90</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="order-panel">
-    <button class="btn-order" onclick="toggleModal(true)">INQUIRY / ORDER</button>
-</div>
-
-<div id="modalOverlay" class="modal-overlay" onclick="toggleModal(false)"></div>
-<div id="contactModal" class="modal-content" style="display:none;">
-    <h2 style="color:var(--primary)">Get in Touch</h2>
-    <p>WhatsApp: <strong>+91 000000000</strong></p>
-    <p>Email: <strong>example@gmail.com.com</strong></p>
-    <button onclick="toggleModal(false)" style="margin-top:20px; padding:10px 20px; border-radius:8px; border:none; background:#eee;">Close</button>
-</div>
-
-<script>
-    // Search Function
-    function filterItems() {
-        let input = document.getElementById('searchInput').value.toLowerCase();
-        let cards = document.getElementsByClassName('product-card');
-        
-        for (let i = 0; i < cards.length; i++) {
-            let name = cards[i].getAttribute('data-name');
-            if (name.includes(input)) {
-                cards[i].style.display = "";
-            } else {
-                cards[i].style.display = "none";
-            }
-        }
-    }
-
-    // Modal Toggle
-    function toggleModal(show) {
-        document.getElementById('modalOverlay').style.display = show ? 'block' : 'none';
-        document.getElementById('contactModal').style.display = show ? 'block' : 'none';
-        document.body.style.overflow = show ? 'hidden' : 'auto';
-    }
-</script>
-
+        </section>
+        <section id="about">
+            <h2>About Us</h2>
+            <p>We are committed to providing the best services.</p>
+        </section>
+        <section id="contact">
+            <h2>Contact Us</h2>
+            <form>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+        <input type="text" id="search" placeholder="Search..." aria-label="Search box">
+    </main>
+    <footer>
+        <p>&copy; 2026 Digital Dealer. All rights reserved.</p>
+    </footer>
 </body>
 </html>
